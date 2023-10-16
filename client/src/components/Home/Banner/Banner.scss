@@ -1,1 +1,68 @@
 @import "../../../css-config/mixins.scss";
+
+
+.hero-banner {
+    width: 100%;
+    background-color: blueviolet;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        @include md {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .text-content {
+            text-align: center;
+            margin: 1rem 0;
+            h1{
+                font-size: 4.5rem;
+                color: white;
+                @include md{
+                    font-size: 7.5rem;
+                }
+            }
+            p{
+                font-size: 18px;
+                padding:0.5rem 1rem;
+                color: white;
+            }
+            .ctas{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                .banner-cta{
+                    border: 2px solid white;
+                    padding: 0.5rem 1rem;
+                    color:white
+                }
+            }
+        }
+
+        Img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 70%;
+
+            @include md {
+                width: 40%;
+            }
+        }
+    }
+}
