@@ -6,6 +6,8 @@ import { TbSearch } from "react-icons/tb";
 import { CgShoppingCart } from "react-icons/cg";
 import { AiOutlineHeart } from "react-icons/ai";
 
+import {BiSolidShoppingBags} from "react-icons/bi"
+
 import Cart from "../Cart/Cart";
 import Search from "./Search/Search";
 import "./Header.scss";
@@ -34,7 +36,7 @@ const Header = () => {
                 <li>About</li>
                 <li>Categories</li>
             </ul>
-            <div className="center">shopstore</div>
+            <div className="center"><BiSolidShoppingBags />shopstore</div>
             <div className="right">
                 <TbSearch />
                 <AiOutlineHeart />
