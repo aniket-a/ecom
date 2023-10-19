@@ -62,7 +62,7 @@
                 font-size: 14px;
                 line-height: 20px;
                 margin-bottom: 20px;    
-                color: gray;
+                color: #6b6b6b;
                 @include md{
                     font-size: 23px;
                 }
@@ -71,7 +71,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: start;
-                margin-bottom: 1rem;    
+                margin-bottom: 2rem;    
                     .quantity_buttons{
                         margin-right: 2rem;
                         .span{
