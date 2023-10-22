@@ -8,22 +8,29 @@ import {
     FaCartPlus,
 } from "react-icons/fa";
 import prod from "../../assets/products/earbuds-prod-1.webp"
-
 import "./SingleProduct.scss";
+import useFetch from "../../hooks/useFetch"
+import { useParams } from "react-router-dom";
+
+
 
 const SingleProduct = () => {
+    const {id} = useParams()
+    const {data} = useFetch(`/api/products?populate=*&[filters][id]=${id}`)
+    console.log(data, "kajdxn")
+
     return(
         <div className="single_product_main_content">
             <div className="layout">
                 <div className="single_product_page">
                     <div className="left">
-                        <img src={prod} alt="" />
+                        <img src={import.meta.env.VITE_REACT_APP_DEV_URL + data?.data[0]?.attributes?.img?.data[0].attributes?.url} alt="" />
                     </div>
 
                     <div className="right">
                         <div className="name">product name</div>
-                        <div className="price">&#8377;499/-</div>
-                        <div className="desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque nisi aspernatur deleniti accusamus tenetur ipsum perferendis, asperiores ullam nam veniam quasi fuga aperiam ut quam assumenda consectetur rerum unde iure?</div>
+                        <div className="price">&#8377;{data?.data[0]?.attributes?.price}/-</div>
+                        <div className="desc">{data?.data[0]?.attributes?.desc}</div>
 
                         <div className="cart_buttons">
                             <div className="quantity_buttons">
@@ -39,7 +46,7 @@ const SingleProduct = () => {
                         <div className="info_items">
                         
                             <span className="text_bold">
-                                Category:<span>Headphones</span>
+                                Category:<span>{data?.data[0]?.attributes?.categories?.data[0]?.attributes?.title}</span>
                             </span>
 
                             <span className="text_bold">

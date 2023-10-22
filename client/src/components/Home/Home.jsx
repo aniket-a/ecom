@@ -5,18 +5,35 @@ import Products from "../Products/Products";
 import { fetchDataFromApi } from "../../utils/api";
 import { useContext, useEffect } from "react";
 import { Context } from "../../utils/context";
+import { useLocation } from "react-router-dom";
+
 
 const Home = () => {
 
-    const {category, setCategory} = useContext(Context)
+    const location = useLocation()
+
+    useEffect(()=>{
+        window.scrollTo({top:0})
+    },[location])
+
+    const {category, setCategory, product, setProduct} = useContext(Context)
 
     useEffect(()=>{
         getCategories()
+        getAllProducts()
     },[])
 
     const getCategories =()=>{
         fetchDataFromApi("/api/categories?populate=*")
         .then((res)=> setCategory(res) )
+    }
+
+    const getAllProducts = ()=>{
+        fetchDataFromApi("/api/products?populate=*")
+        .then(res=> {
+    
+            setProduct(res)
+        })
     }
     
     return (
@@ -25,7 +42,7 @@ const Home = () => {
             <div className="main-content">
                 <div className="layout">
                     <Category category={category} />
-                    <Products headingText="Popular products"/>
+                    <Products product={product} headingText="Popular products"/>
                 </div>
             </div>
                 
