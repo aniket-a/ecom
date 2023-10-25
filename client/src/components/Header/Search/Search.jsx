@@ -1,30 +1,60 @@
 import "./Search.scss";
 import { MdClose } from "react-icons/md";
-import prod from "../../../assets/products/earbuds-prod-1.webp"
+import { useState } from "react";
+import useFetch from "../../../hooks/useFetch"
+import { useNavigate, useParams } from "react-router-dom";
 
-const Search = ({setshowSearch}) => {
+
+const Search = ({ setshowSearch }) => {
+
+    const {id} = useParams()
+
+    const Navigate = useNavigate()
+
+    const [query, setQuery] = useState("")
+
+    const queryHandler = (e) => {
+        setQuery(e.target.value);
+    }
+
+    let { data } = useFetch(`/api/products?populate=*&filters[title][$contains]=${query}`)
+    console.log(data, "query")
+
     return (
         <div className="search_model">
             <div className="form_feild">
-                <input 
+                <input
                     type="text"
-                    placeholder="SEARCH FOR PRODUCTS"    
+                    placeholder="SEARCH FOR PRODUCTS"
+                    value={query}
+                    onChange={queryHandler}
                 />
-                <MdClose onClick={()=> setshowSearch(false)} />
+                <MdClose onClick={() => setshowSearch(false)} />
             </div>
+
+
             <div className="search_result_content">
                 <div className="search_results">
-                    <div className="search_result_item">
+                    {
+                        data?.data?.map((item) => {
+                            
+                            return (
+                                <div className="search_result_item" key={item.id} onClick={()=> {
+                                    Navigate("/product/" + item?.id)
+                                    setshowSearch(false)
+                                }}>
+                                    <div className="img_container">
+                                        <img src={import.meta.env.VITE_REACT_APP_DEV_URL + item?.attributes?.img?.data[0]?.attributes?.url } alt="" />
+                                    </div>
 
-                        <div className="img_container">
-                            <img src={prod} alt="" />
-                        </div>
-                        
-                        <div className="prod_details">
-                            <div className="name">product name</div>
-                            <div className="desc">desc Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat dicta culpa cumque quod sint quam ducimus debitis suscipit! Expedita hic voluptatem maxime illum possimus dolorum, temporibus optio officiis laborum! Architecto?</div>
-                        </div>
-                    </div>
+                                    <div className="prod_details">
+                                        <div className="name">{item?.attributes?.title}</div>
+                                        <div className="desc">{item?.attributes?.desc}</div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
