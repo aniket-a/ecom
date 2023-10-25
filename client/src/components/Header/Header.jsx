@@ -14,6 +14,8 @@ import "./Header.scss";
 
 const Header = () => {
 
+    const {cartCount} = useContext(Context)
+
     const [scroll, setScroll] = useState(false)
     const [showCart, setshowCart] = useState(false)
     const [showSearch, setshowSearch] = useState(false)
@@ -47,7 +49,7 @@ const Header = () => {
 
                         <span className="cart_icon">
                             <CgShoppingCart onClick={()=> setshowCart(true)}/>
-                            <span>5</span>
+                            {!!cartCount && <span>{cartCount}</span>}
                         </span>
                     </div>
                 </div>

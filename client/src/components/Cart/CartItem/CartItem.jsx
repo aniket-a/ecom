@@ -1,35 +1,46 @@
 import "./CartItem.scss";
 import { MdClose } from "react-icons/md";
-import prod from "../../../assets/products/earbuds-prod-1.webp"
-
+import { useContext } from "react";
+import { Context } from "../../../utils/context";
 const CartItem = () => {
-    return(
+
+    const { cartItems , handleRemoveToCart, handleProductCartQuantity } = useContext(Context)
+    
+    
+
+    return (
         <div className="cart_products">
-            <div className="cart_product">
+            {
+                cartItems.map((product) => {
+                    return(
+                        <div className="cart_product" key={product.id}> 
 
-                <div className="img_container">
-                    <img src={prod} alt="" />
-                </div>
+                        <div className="img_container">
+                            <img src={import.meta.env.VITE_REACT_APP_DEV_URL + product?.attributes?.img?.data[0]?.attributes?.url } alt="" />
+                        </div>
 
-                <div className="prod_details">
-                    <div className="name">product Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus at eius recusandae porro odio molestias nemo, nihil aperiam quas quia! Maiores fugiat vero eligendi quod. Repellat quam voluptates nesciunt optio!  </div>
-                    <MdClose className="close_btn"/>
+                        <div className="prod_details">
+                            <div className="name">{product?.attributes?.title}</div>
+                            <MdClose className="close_btn" onClick={()=> handleRemoveToCart(product)} />
 
-                    <div className="quantity_btns">
-                        <span>-</span>
-                        <span>5</span>
-                        <span>+</span>
+                            <div className="quantity_btns">
+                                <span onClick={()=> handleProductCartQuantity('dec', product)}>-</span>
+                                <span>{product?.attributes?.quantity}</span>
+                                <span onClick={()=> handleProductCartQuantity('inc', product)}>+</span>
+                            </div>
+
+                            <div className="text">
+                                <span>{product?.attributes?.quantity} </span>
+                                <span>x </span>
+                                <span>&#8377; {product?.attributes?.price * product?.attributes?.quantity }</span>
+                            </div>
+
+                        </div>
+
                     </div>
-
-                    <div className="text">
-                        <span>3</span>
-                        <span>x</span>
-                        <span>&#8377;2000</span>
-                    </div>
-
-                </div>
-
-            </div>
+                    )
+                })
+            }
         </div>
     );
 };
